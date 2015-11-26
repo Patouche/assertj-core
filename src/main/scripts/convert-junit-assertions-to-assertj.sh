@@ -78,10 +78,14 @@ echo '11 - Replacing : assertNotSame(expected, actual) ................ by : ass
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/assertNotSame(\(\".*\"\),[[:blank:]]*\(.*\),[[:blank:]]*\(.*\))/assertThat(\3).as(\1).isNotSameAs(\2)/g' '{}' \;
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/assertNotSame([[:blank:]]*\(.*\),[[:blank:]]*\(.*\))/assertThat(\2).isNotSameAs(\1)/g' '{}' \;
 
+echo '12 - Replacing : fail() ................ by : fail("Failure")'
+find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/Assert\.fail\([[:blank:]]*\)/Assertions.fail("Failed")/g' '{}' \;
+find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/Assert\.fail\(\(.*\)\)/Assertions.fail(\1)/g' '{}' \;
+
 echo ''
-echo '12 - Replacing JUnit static import by AssertJ ones, at this point you will probably need to :'
-echo '12 --- optimize imports with your IDE to remove unused imports'
-echo '12 --- add "import static org.assertj.core.api.Assertions.within;" if you were using JUnit number assertions with delta'
+echo '13 - Replacing JUnit static import by AssertJ ones, at this point you will probably need to :'
+echo '13 --- optimize imports with your IDE to remove unused imports'
+echo '13 --- add "import static org.assertj.core.api.Assertions.within;" if you were using JUnit number assertions with delta'
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/import static org.junit.Assert.assertEquals;/import static org.assertj.core.api.Assertions.assertThat;/g' '{}' \;
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/import static org.junit.Assert.fail;/import static org.assertj.core.api.Assertions.fail;/g' '{}' \;
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/import static org.junit.Assert.\*;/import static org.assertj.core.api.Assertions.*;/g' '{}' \;
