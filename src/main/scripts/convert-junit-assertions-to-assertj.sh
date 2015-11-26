@@ -78,7 +78,7 @@ echo '11 - Replacing : assertNotSame(expected, actual) ................ by : ass
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/assertNotSame(\(\".*\"\),[[:blank:]]*\(.*\),[[:blank:]]*\(.*\))/assertThat(\3).as(\1).isNotSameAs(\2)/g' '{}' \;
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/assertNotSame([[:blank:]]*\(.*\),[[:blank:]]*\(.*\))/assertThat(\2).isNotSameAs(\1)/g' '{}' \;
 
-echo '12 - Replacing : fail() ................ by : fail("Failure")'
+echo '12 - Replacing : fail(failureMessage) ........................... by : fail(failureMessage)'
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/Assert\.fail\([[:blank:]]*\)/Assertions.fail("Failed")/g' '{}' \;
 find . -name "$FILES_PATTERN" -exec sed ${SED_OPTIONS} 's/Assert\.fail\(\(.*\)\)/Assertions.fail(\1)/g' '{}' \;
 
